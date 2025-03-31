@@ -1,0 +1,28 @@
+{
+  "name": "crudp",
+  "version": "1.0.0",
+  "type": "module",
+"scripts": {
+  "dev": "parcel serve ./src/index.html --port 3000",
+  "type-check": "tsc -b --noEmit",
+  "lint": "eslint src --ext .ts --cache --fix",
+  "build": "npm run type-check && npm run lint && parcel build ./src/index.html --no-autoinstall --no-optimize",
+  "format": "prettier src --write",
+  "clean": "rm -rf dist .parcel-cache"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
+    "parcel": "^2.14.4",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
+  },
+  "dependencies": {
+    "prettier": "^3.5.3"
+  }
+}
