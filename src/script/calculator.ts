@@ -266,12 +266,10 @@ export class Calculator {
                 dropdownMenu.style.display === 'block' ? 'none' : 'block'; // Toggle visibility
         });
 
-        // Hide dropdown
         document.addEventListener('click', () => {
             dropdownMenu.style.display = 'none';
         });
 
-        // Prevent closing the dropdown when clicking inside the menu
         dropdownMenu.addEventListener('click', (event) => {
             event.stopPropagation();
         });
