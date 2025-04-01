@@ -1,383 +1,271 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-    </head>
-    <body>
-        <!doctype html>
-        <html lang="en">
-            <head>
-                <meta charset="UTF-8" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="assets/images/calculator.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+
+  <body>
+    <main class="calculator">
+      <div class="container">
+        <button id="toggleHistoryButton" aria-label="history-button">
+          <i class="fa fa-history"></i>
+        </button>
+
+        <!-- History Container-->
+        <div id="historyContainer" class="history-container">
+          <div id="historyList">
+            <button class="clear-history-btn" aria-label="clear-btn">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Display Screen -->
+        <div class="display" tabindex="0">
+          <span id="screen">0</span>
+        </div>
+
+        <div class="btns">
+          <div class="function-row">
+            <!-- Memory and History buttons -->
+            <div class="degree-row">
+              <button
+                class="d-btn c-btn"
+                aria-label="Degree Mode"
+                id="deg-btn"
+              >
+                <span class="bold-text">DEG</span>
+              </button>
+              <button
+                class="d-btn fe-btn c-btn"
+                value="f-e"
+                id="fe-btn"
+                aria-label="Default Notation Mode"
+              >
+                <span class="bold-text">F-E</span>
+              </button>
+            </div>
+
+            <!-- Memory buttons -->
+            <button
+              class="memory m-color mc-btn c-btn"
+              aria-label="Memory Clear"
+            >
+              MC
+            </button>
+            <button
+              class="memory m-color mr-btn c-btn"
+              aria-label="Memory Recall"
+            >
+              MR
+            </button>
+            <button class="memory mplus-btn c-btn" aria-label="Memory Add">
+              <span class="bold-text">M+</span>
+            </button>
+            <button
+              class="memory mminus-btn c-btn"
+              aria-label="Memory Subtract"
+            >
+              <span class="bold-text">M-</span>
+            </button>
+            <button class="memory ms-btn c-btn" aria-label="Memory Store">
+              <span class="bold-text">MS</span>
+            </button>
+
+            <!-- trignometry and function -->
+            <div class="trignometry">
+              <button
+                class="f-btn c-btn"
+                id="dropdownBtn"
+                aria-label="Trigonometry Functions"
+              >
+                <img
+                  src="assets/images/ruler.svg"
+                  alt="ruler"
+                  id="ruler-img"
                 />
-                <title>Scientific Calculator</title>
-                <link rel="stylesheet" href="style.css" />
-                <link rel="icon" href="assets/images/calculator.svg" />
-                <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-                    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-                    crossorigin="anonymous"
-                    referrerpolicy="no-referrer"
+                Trignometry
+                <img
+                  src="assets/images/drop-down.svg"
+                  class="drop-down"
+                  alt="drop-down arrow"
                 />
-            </head>
+              </button>
+              <div class="dropdown-menu" id="dropdownMenu">
+                <div class="dropdown-item sin-btn" value="sin">sin</div>
+                <div class="dropdown-item cos-btn" value="cos">cos</div>
+                <div class="dropdown-item tan-btn" value="tan">tan</div>
+              </div>
+            </div>
 
-            <body>
-                <main class="calculator">
-                    <div class="container">
-                        <button
-                            id="toggleHistoryButton"
-                            aria-label="history-button"
-                        >
-                            <i class="fa fa-history"></i>
-                        </button>
+            <div class="function">
+              <button
+                class="f-btn1 c-btn"
+                id="dropdownBtn1"
+                aria-label="Function List"
+              >
+                <img
+                  src="assets/images/function.svg"
+                  alt="function symbol"
+                  id="function-img"
+                  class="function-img"
+                />
+                Functions
+                <img
+                  src="assets/images/drop-down.svg"
+                  class="drop-down"
+                  alt="drop-down arrow"
+                />
+              </button>
+              <div class="dropdown-menu" id="dropdownMenu1">
+                <div class="dropdown-item floor-btn">floor</div>
+                <div class="dropdown-item ceil-btn">ceil</div>
+              </div>
+            </div>
+          </div>
+          <!-- Calculator Number and Function Buttons -->
+          <div class="calculator-btn">
+            <button
+              id="second-btn"
+              aria-label="second-btn"
+              value="second-function"
+            >
+              2<sup>nd</sup>
+            </button>
+            <button class="pi-btn" aria-label="math pi">π</button>
+            <button class="eulars-btn" aria-label="Eular's function">
+              e
+            </button>
+            <button class="clear-btn" id="clear" aria-label="clear">
+              C
+            </button>
+            <button id="backspace-btn">
+              <img
+                src="assets/images/backspace.svg"
+                aria-label="backspace"
+                alt="backspace"
+                id="backspace"
+              />
+            </button>
 
-                        <!-- History Container-->
-                        <div id="historyContainer" class="history-container">
-                            <div id="historyList">
-                                <button
-                                    class="clear-history-btn"
-                                    aria-label="clear-btn"
-                                >
-                                    <i
-                                        class="fa fa-trash"
-                                        aria-hidden="true"
-                                    ></i>
-                                </button>
-                            </div>
-                        </div>
+            <button class="square-btn" aria-label="x power 2">
+              x<sup>2</sup>
+            </button>
+            <button class="reciprocal-btn" aria-label="toggle 1 and x">
+              1/x
+            </button>
+            <button class="abs-btn" aria-label="module x">|x|</button>
+            <button class="exponent-btn" aria-label="exponent">exp</button>
+            <button class="modulus-btn" aria-label="modulus">mod</button>
 
-                        <!-- Display Screen -->
-                        <div class="display" tabindex="0">
-                            <span id="screen">0</span>
-                        </div>
+            <button class="btn sqrt-btn" aria-label="root function">
+              <sup>2</sup>√x
+            </button>
+            <button class="open-paren-btn" aria-label="opening paranthesis">
+              (
+            </button>
+            <button
+              class="close-paren-btn"
+              aria-label="closing paranthesis"
+            >
+              )
+            </button>
+            <button class="factorial-btn" aria-label="factorial">n!</button>
+            <button
+              class="btn divide-btn operator"
+              aria-label="division symbol"
+            >
+              ÷
+            </button>
 
-                        <div class="btns">
-                            <div class="function-row">
-                                <!-- Memory and History buttons -->
-                                <div class="degree-row">
-                                    <button
-                                        class="d-btn c-btn"
-                                        aria-label="Degree Mode"
-                                        id="deg-btn"
-                                    >
-                                        <span class="bold-text">DEG</span>
-                                    </button>
-                                    <button
-                                        class="d-btn fe-btn c-btn"
-                                        value="f-e"
-                                        id="fe-btn"
-                                        aria-label="Default Notation Mode"
-                                    >
-                                        <span class="bold-text">F-E</span>
-                                    </button>
-                                </div>
+            <button class="power-btn" aria-label="x power y">
+              x<sup>y</sup>
+            </button>
+            <button class="btn num" aria-label="number 7">
+              <span class="bold-text">7</span>
+            </button>
+            <button class="btn num" aria-label="number 8">
+              <span class="bold-text">8</span>
+            </button>
+            <button class="btn num" aria-label="number 9">
+              <span class="bold-text">9</span>
+            </button>
+            <button
+              class="btn multiply-btn operator"
+              aria-label="multiply symbol"
+            >
+              ×
+            </button>
 
-                                <!-- Memory buttons -->
-                                <button
-                                    class="memory m-color mc-btn c-btn"
-                                    aria-label="Memory Clear"
-                                >
-                                    MC
-                                </button>
-                                <button
-                                    class="memory m-color mr-btn c-btn"
-                                    aria-label="Memory Recall"
-                                >
-                                    MR
-                                </button>
-                                <button
-                                    class="memory mplus-btn c-btn"
-                                    aria-label="Memory Add"
-                                >
-                                    <span class="bold-text">M+</span>
-                                </button>
-                                <button
-                                    class="memory mminus-btn c-btn"
-                                    aria-label="Memory Subtract"
-                                >
-                                    <span class="bold-text">M-</span>
-                                </button>
-                                <button
-                                    class="memory ms-btn c-btn"
-                                    aria-label="Memory Store"
-                                >
-                                    <span class="bold-text">MS</span>
-                                </button>
+            <button class="ten-power-btn" aria-label="10 power x">
+              10<sup>x</sup>
+            </button>
+            <button class="btn num" aria-label="number 4">
+              <span class="bold-text">4</span>
+            </button>
+            <button class="btn num" aria-label="number 5">
+              <span class="bold-text">5</span>
+            </button>
+            <button class="btn num" aria-label="number 6">
+              <span class="bold-text">6</span>
+            </button>
+            <button
+              class="btn subtract-btn operator"
+              aria-label="substraction symbol"
+            >
+              -
+            </button>
 
-                                <!-- trignometry and function -->
-                                <div class="trignometry">
-                                    <button
-                                        class="f-btn c-btn"
-                                        id="dropdownBtn"
-                                        aria-label="Trigonometry Functions"
-                                    >
-                                        <img
-                                            src="assets/images/ruler.svg"
-                                            alt="ruler"
-                                            id="ruler-img"
-                                        />
-                                        Trignometry
-                                        <img
-                                            src="assets/images/drop-down.svg"
-                                            class="drop-down"
-                                            alt="drop-down arrow"
-                                        />
-                                    </button>
-                                    <div
-                                        class="dropdown-menu"
-                                        id="dropdownMenu"
-                                    >
-                                        <div
-                                            class="dropdown-item sin-btn"
-                                            value="sin"
-                                        >
-                                            sin
-                                        </div>
-                                        <div
-                                            class="dropdown-item cos-btn"
-                                            value="cos"
-                                        >
-                                            cos
-                                        </div>
-                                        <div
-                                            class="dropdown-item tan-btn"
-                                            value="tan"
-                                        >
-                                            tan
-                                        </div>
-                                    </div>
-                                </div>
+            <button class="log-btn" aria-label="logarithm">log</button>
+            <button class="btn num" aria-label="number 1">
+              <span class="bold-text">1</span>
+            </button>
+            <button class="btn num" aria-label="number 2">
+              <span class="bold-text">2</span>
+            </button>
+            <button class="btn num" aria-label="number 3">
+              <span class="bold-text">3</span>
+            </button>
+            <button class="btn add-btn operator" aria-label="add symbol">
+              +
+            </button>
 
-                                <div class="function">
-                                    <button
-                                        class="f-btn1 c-btn"
-                                        id="dropdownBtn1"
-                                        aria-label="Function List"
-                                    >
-                                        <img
-                                            src="assets/images/function.svg"
-                                            alt="function symbol"
-                                            id="function-img"
-                                            class="function-img"
-                                        />
-                                        Functions
-                                        <img
-                                            src="assets/images/drop-down.svg"
-                                            class="drop-down"
-                                            alt="drop-down arrow"
-                                        />
-                                    </button>
-                                    <div
-                                        class="dropdown-menu"
-                                        id="dropdownMenu1"
-                                    >
-                                        <div class="dropdown-item floor-btn">
-                                            floor
-                                        </div>
-                                        <div class="dropdown-item ceil-btn">
-                                            ceil
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Calculator Number and Function Buttons -->
-                            <div class="calculator-btn">
-                                <button
-                                    class="second-btn"
-                                    aria-label="second-btn"
-                                    value="second-function"
-                                >
-                                    2<sup>nd</sup>
-                                </button>
-                                <button class="pi-btn" aria-label="math pi">
-                                    π
-                                </button>
-                                <button
-                                    class="eulars-btn"
-                                    aria-label="Eular's function"
-                                >
-                                    e
-                                </button>
-                                <button
-                                    class="clear-btn"
-                                    id="clear"
-                                    aria-label="clear"
-                                >
-                                    C
-                                </button>
-                                <button>
-                                    <img
-                                        src="assets/images/backspace.svg"
-                                        aria-label="backspace"
-                                        alt="backspace"
-                                        id="backspace"
-                                    />
-                                </button>
-
-                                <button
-                                    class="square-btn"
-                                    aria-label="x power 2"
-                                >
-                                    x<sup>2</sup>
-                                </button>
-                                <button
-                                    class="reciprocal-btn"
-                                    aria-label="toggle 1 and x"
-                                >
-                                    1/x
-                                </button>
-                                <button class="abs-btn" aria-label="module x">
-                                    |x|
-                                </button>
-                                <button
-                                    class="exponent-btn"
-                                    aria-label="exponent"
-                                >
-                                    exp
-                                </button>
-                                <button
-                                    class="modulus-btn"
-                                    aria-label="modulus"
-                                >
-                                    mod
-                                </button>
-
-                                <button
-                                    class="btn sqrt-btn"
-                                    aria-label="root function"
-                                >
-                                    <sup>2</sup>√x
-                                </button>
-                                <button
-                                    class="open-paren-btn"
-                                    aria-label="opening paranthesis"
-                                >
-                                    (
-                                </button>
-                                <button
-                                    class="close-paren-btn"
-                                    aria-label="closing paranthesis"
-                                >
-                                    )
-                                </button>
-                                <button
-                                    class="factorial-btn"
-                                    aria-label="factorial"
-                                >
-                                    n!
-                                </button>
-                                <button
-                                    class="btn divide-btn operator"
-                                    aria-label="division symbol"
-                                >
-                                    ÷
-                                </button>
-
-                                <button
-                                    class="power-btn"
-                                    aria-label="x power y"
-                                >
-                                    x<sup>y</sup>
-                                </button>
-                                <button class="btn num" aria-label="number 7">
-                                    <span class="bold-text">7</span>
-                                </button>
-                                <button class="btn num" aria-label="number 8">
-                                    <span class="bold-text">8</span>
-                                </button>
-                                <button class="btn num" aria-label="number 9">
-                                    <span class="bold-text">9</span>
-                                </button>
-                                <button
-                                    class="btn multiply-btn operator"
-                                    aria-label="multiply symbol"
-                                >
-                                    ×
-                                </button>
-
-                                <button
-                                    class="ten-power-btn"
-                                    aria-label="10 power x"
-                                >
-                                    10<sup>x</sup>
-                                </button>
-                                <button class="btn num" aria-label="number 4">
-                                    <span class="bold-text">4</span>
-                                </button>
-                                <button class="btn num" aria-label="number 5">
-                                    <span class="bold-text">5</span>
-                                </button>
-                                <button class="btn num" aria-label="number 6">
-                                    <span class="bold-text">6</span>
-                                </button>
-                                <button
-                                    class="btn subtract-btn operator"
-                                    aria-label="substraction symbol"
-                                >
-                                    -
-                                </button>
-
-                                <button class="log-btn" aria-label="logarithm">
-                                    log
-                                </button>
-                                <button class="btn num" aria-label="number 1">
-                                    <span class="bold-text">1</span>
-                                </button>
-                                <button class="btn num" aria-label="number 2">
-                                    <span class="bold-text">2</span>
-                                </button>
-                                <button class="btn num" aria-label="number 3">
-                                    <span class="bold-text">3</span>
-                                </button>
-                                <button
-                                    class="btn add-btn operator"
-                                    aria-label="add symbol"
-                                >
-                                    +
-                                </button>
-
-                                <button
-                                    class="logn-btn"
-                                    aria-label="natural logarithm"
-                                >
-                                    ln
-                                </button>
-                                <button
-                                    class="num toggle-sign-btn operator"
-                                    aria-label="toggle add and subtract"
-                                >
-                                    +/-
-                                </button>
-                                <button class="btn num" aria-label="number 0">
-                                    <span class="bold-text">0</span>
-                                </button>
-                                <button
-                                    class="btn num operator"
-                                    aria-label="decimal point"
-                                >
-                                    .
-                                </button>
-                                <button
-                                    id="equals"
-                                    class="operator"
-                                    aria-label="equal sign"
-                                >
-                                    =
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-                <!-- Link to External JS File -->
-                <script type="module" src="src/script/main.ts"></script>
-            </body>
-        </html>
-
-        <script src="script/index.ts"></script>
-    </body>
+            <button class="logn-btn" aria-label="natural logarithm">
+              ln
+            </button>
+            <button
+              class="num toggle-sign-btn operator"
+              aria-label="toggle add and subtract"
+            >
+              +/-
+            </button>
+            <button class="btn num" aria-label="number 0">
+              <span class="bold-text">0</span>
+            </button>
+            <button class="btn num operator" aria-label="decimal point">
+              .
+            </button>
+            <button id="equals" class="operator" aria-label="equal sign">
+              =
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Link to External JS File -->
+    <script type="module" src="script/main.ts"></script>
+  </body>
+</html>
+</body>
 </html>
