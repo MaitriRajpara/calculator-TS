@@ -25,6 +25,7 @@ export class Calculator {
         this.updateDegButton();
         this.isPrimary = false;
         this.FEMode = false;
+        this.handleKeyPress = this.handleKeyPress.bind(this);
 
         // Constants for buttons
         const FEButton = document.getElementById('fe-btn') as HTMLElement;
@@ -40,6 +41,28 @@ export class Calculator {
         this.sinBtn = sinBtn;
         this.cosBtn = cosBtn;
         this.tanBtn = tanBtn;
+    }
+
+    public handleKeyPress(this: Calculator, event: KeyboardEvent): void {
+        const key: string = event.key;
+
+        if (!isNaN(Number(key))) {
+            this.appendValue(key);
+        } else if (key === '+') {
+            this.add();
+        } else if (key === '-') {
+            this.subtract();
+        } else if (key === '*') {
+            this.multiply();
+        } else if (key === '/') {
+            this.divide();
+        } else if (key === 'Enter') {
+            this.result();
+        } else if (key === 'Backspace') {
+            this.backspace();
+        } else if (key === 'Escape' || key.toLowerCase() === 'c') {
+            this.clearDisplay();
+        }
     }
 
     appendValue(value: string): void {
@@ -347,7 +370,7 @@ export class Calculator {
         trigFunctions.forEach(({ btn, primary, secondary }) => {
             if (btn) {
                 const functionText = this.isSecondPrimary ? secondary : primary;
-                btn.textContent = functionText.replace('(', ''); 
+                btn.textContent = functionText.replace('(', '');
                 const newBtn = btn.cloneNode(true) as HTMLElement;
                 btn.parentNode?.replaceChild(newBtn, btn);
 
@@ -366,7 +389,7 @@ export class Calculator {
     trigonometry(func: string) {
         let inputText = this.screen.textContent?.trim() || '';
         let inputMatch = inputText.match(/-?\d+(\.\d+)?/);
-        let inputValue = inputMatch ? parseFloat(inputMatch[0]) : NaN; 
+        let inputValue = inputMatch ? parseFloat(inputMatch[0]) : NaN;
 
         if (isNaN(inputValue)) {
             this.screen.textContent = 'Error';
