@@ -367,7 +367,6 @@ export class Calculator {
 
     trigonometry(func: string) {
         let inputText = this.screen.textContent?.trim() || '';
-        // Extract numeric value
         let inputMatch = inputText.match(/-?\d+(\.\d+)?/);
         let inputValue = inputMatch ? parseFloat(inputMatch[0]) : NaN; 
 
@@ -422,12 +421,10 @@ export class Calculator {
                 return;
         }
 
-        // Convert radians to degrees if DEG mode is active
         if (this.isDegreeMode && ['asin', 'acos', 'atan'].includes(func)) {
             result = result * (180 / Math.PI);
         }
 
-        // Display the result with up to 6 decimal places
         this.screen.textContent = result.toFixed(6);
         this.saveHistory(
             `${func}(${inputValue}${this.isDegreeMode ? '°' : ' rad'}) = ${result.toFixed(6)}`
