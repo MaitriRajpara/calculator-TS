@@ -1,5 +1,7 @@
 ## Scientific Calculator
 
+## Deploying Here : https://lms-calc-ts.netlify.app/
+
 ### Overview
 This is a web-based scientific calculator built using TypeScript, HTML, and CSS. It supports various mathematical operations and maintains a history of calculations.
 
