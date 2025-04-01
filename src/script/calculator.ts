@@ -338,11 +338,7 @@ export class Calculator {
 
     toggleSecondPrimary(button: HTMLElement) {
         this.isSecondPrimary = !this.isSecondPrimary;
-
-        // Toggle the button text
         button.textContent = this.isSecondPrimary ? 'Primary' : '2nd';
-
-        // Define primary and secondary functions
         const trigFunctions = [
             { btn: this.sinBtn, primary: 'sin(', secondary: 'asin(' },
             { btn: this.cosBtn, primary: 'cos(', secondary: 'acos(' },
@@ -353,11 +349,7 @@ export class Calculator {
         trigFunctions.forEach(({ btn, primary, secondary }) => {
             if (btn) {
                 const functionText = this.isSecondPrimary ? secondary : primary;
-
-                // Update button text
                 btn.textContent = functionText.replace('(', ''); 
-
-                // Remove all previous event listeners
                 const newBtn = btn.cloneNode(true) as HTMLElement;
                 btn.parentNode?.replaceChild(newBtn, btn);
 
@@ -366,7 +358,6 @@ export class Calculator {
                 if (btn.classList.contains('cos-btn')) this.cosBtn = newBtn;
                 if (btn.classList.contains('tan-btn')) this.tanBtn = newBtn;
 
-                // Add new event listener
                 newBtn.addEventListener('click', () => {
                     this.appendValue(functionText);
                 });
