@@ -1,5 +1,12 @@
-import { clearHistory, setupHistoryToggle } from './history';
-import { Calculator } from './calculator';
+import {
+    saveHistory,
+    clearHistory,
+    displayHistory,
+    setupHistoryToggle,
+} from './history.js';
+import { handleMC, handleMR, handleMS, handleMemoryOperation } from './memory.js';
+import { Calculator } from './calculator.js';
+import { handleKeyPress } from './keypress';
 
 // Ensure the calculator variable is of type Calculator
 const calculator = new Calculator('screen');
@@ -117,3 +124,4 @@ calculator.setupDropdown('dropdownBtn', 'dropdownMenu');
 calculator.setupDropdown('dropdownBtn1', 'dropdownMenu1');
 setupHistoryToggle();
 calculator.initializeMemoryFunctions();
+document.addEventListener('keydown', handleKeyPress.bind(calculator));

@@ -35,8 +35,8 @@ export function handleMS(
 }
 
 // memory-add/minus-btn
-export function handleMplusAndMinus(
-    ref: any,
+export function handleMemoryOperation(
+    operation: 'M+' | 'M-',
     screen: HTMLElement,
     getValueCallback: (screen: HTMLElement) => string | number | null
 ): void {
@@ -46,13 +46,17 @@ export function handleMplusAndMinus(
     const currentValue = parseFloat(getValueCallback(screen) as string);
 
     if (isNaN(memoryValue) || isNaN(currentValue)) {
-        console.error(
-            'Invalid memory or current value for memory add/subtract.'
-        );
+        console.error('Invalid memory or current value for memory operation.');
         return;
     }
 
-    const newMemoryValue = memoryValue + currentValue;
+    const newMemoryValue =
+        operation === 'M+'
+            ? memoryValue + currentValue
+            : memoryValue - currentValue;
+
     localStorage.setItem('calculationOutput', newMemoryValue.toString());
-    console.log(`Memory Updated: ${newMemoryValue}`);
+    console.log(
+        `Memory ${operation === 'M+' ? 'Added' : 'Subtracted'}: ${newMemoryValue}`
+    );
 }
