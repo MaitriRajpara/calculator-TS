@@ -1,71 +1,42 @@
 import { saveHistory } from './history';
-import { handleMC, handleMR, handleMS, handleMplusAndMinus } from './memory';
+import { handleMC, handleMR, handleMS, handleMemoryOperation } from './memory';
 import { ExtendedMath } from './util';
 
 export class Calculator {
     screen: HTMLElement;
-    calculationDone: boolean;
-    isDegreeMode: boolean;
-    isPrimary: boolean;
-    FEMode: boolean;
+    calculationDone: boolean = false;
+    isDegreeMode: boolean = true;
+    isPrimary: boolean = false;
+    FEMode: boolean = false;
     FEButton: HTMLElement;
     sinBtn: HTMLElement;
     cosBtn: HTMLElement;
     tanBtn: HTMLElement;
-    isSecondPrimary: boolean=false;
-    math: ExtendedMath;
+    isSecondPrimary: boolean = false;
+
+    private math: ExtendedMath;
 
     constructor(screenId: string) {
         this.screen = document.getElementById(screenId) as HTMLElement;
         if (!this.screen) {
             throw new Error(`Screen element with id "${screenId}" not found.`);
         }
-        this.calculationDone = false;
         this.screen.textContent =
             localStorage.getItem('calculationOutput') || '0';
-        this.isDegreeMode = true;
         this.updateDegButton();
-        this.isPrimary = false;
-        this.FEMode = false;
-        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.math = Math as ExtendedMath;
 
-        // Constants for buttons
-        const FEButton = document.getElementById('fe-btn') as HTMLElement;
-        const sinBtn = document.querySelector('.sin-btn') as HTMLElement;
-        const cosBtn = document.querySelector('.cos-btn') as HTMLElement;
-        const tanBtn = document.querySelector('.tan-btn') as HTMLElement;
+        // // Constants for buttons
+        const FEButton = document.getElementById('fe-btn') as HTMLButtonElement;
 
         if (!FEButton) {
             console.error('F-E Button not found!');
         }
 
         this.FEButton = FEButton;
-        this.sinBtn = sinBtn;
-        this.cosBtn = cosBtn;
-        this.tanBtn = tanBtn;
-    }
-
-    public handleKeyPress(this: Calculator, event: KeyboardEvent): void {
-        const key: string = event.key;
-
-        if (!isNaN(Number(key))) {
-            this.appendValue(key);
-        } else if (key === '+') {
-            this.add();
-        } else if (key === '-') {
-            this.subtract();
-        } else if (key === '*') {
-            this.multiply();
-        } else if (key === '/') {
-            this.divide();
-        } else if (key === 'Enter') {
-            this.result();
-        } else if (key === 'Backspace') {
-            this.backspace();
-        } else if (key === 'Escape' || key.toLowerCase() === 'c') {
-            this.clearDisplay();
-        }
+        this.sinBtn = document.querySelector('.sin-btn') as HTMLButtonElement;
+        this.cosBtn = document.querySelector('.cos-btn') as HTMLButtonElement;
+        this.tanBtn = document.querySelector('.tan-btn') as HTMLButtonElement;
     }
 
     appendValue(value: string): void {
@@ -110,27 +81,32 @@ export class Calculator {
 
     initializeMemoryFunctions(): void {
         // Constants for memory function buttons
-        const mcBtn = document.querySelector('.mc-btn') as HTMLElement;
-        const mrBtn = document.querySelector('.mr-btn') as HTMLElement;
-        const msBtn = document.querySelector('.ms-btn') as HTMLElement;
-        const mplusBtn = document.querySelector('.mplus-btn') as HTMLElement;
-        const mminusBtn = document.querySelector('.mminus-btn') as HTMLElement;
+        const mcBtn = document.querySelector('.mc-btn') as HTMLButtonElement;
+        const mrBtn = document.querySelector('.mr-btn') as HTMLButtonElement;
+        const msBtn = document.querySelector('.ms-btn') as HTMLButtonElement;
+        const mplusBtn = document.querySelector(
+            '.mplus-btn'
+        ) as HTMLButtonElement;
+        const mminusBtn = document.querySelector(
+            '.mminus-btn'
+        ) as HTMLButtonElement;
 
         mcBtn.addEventListener('click', () => handleMC());
         mrBtn.addEventListener('click', () => handleMR(this.screen));
         msBtn.addEventListener('click', () =>
             handleMS(this.screen, (input) => input.textContent)
         );
-        mplusBtn.addEventListener('click', (event) =>
-            handleMplusAndMinus(
-                event.target,
+        mplusBtn.addEventListener('click', () =>
+            handleMemoryOperation(
+                'M+',
                 this.screen,
                 (input) => input.textContent
             )
         );
-        mminusBtn.addEventListener('click', (event) =>
-            handleMplusAndMinus(
-                event.target,
+
+        mminusBtn.addEventListener('click', () =>
+            handleMemoryOperation(
+                'M-',
                 this.screen,
                 (input) => input.textContent
             )
@@ -256,6 +232,7 @@ export class Calculator {
             saveHistory(`${expression} = ${evaluatedResult}`);
         } catch (error) {
             alert('Error');
+            console.error(error);
         }
     }
 
@@ -278,7 +255,7 @@ export class Calculator {
     }
 
     setupDropdown(btnId: string, menuId: string): void {
-        const dropdownBtn = document.getElementById(btnId) as HTMLElement;
+        const dropdownBtn = document.getElementById(btnId) as HTMLButtonElement;
         const dropdownMenu = document.getElementById(menuId) as HTMLElement;
 
         if (!dropdownBtn || !dropdownMenu) {
@@ -292,10 +269,12 @@ export class Calculator {
                 dropdownMenu.style.display === 'block' ? 'none' : 'block'; // Toggle visibility
         });
 
+        // Hide dropdown
         document.addEventListener('click', () => {
             dropdownMenu.style.display = 'none';
         });
 
+        // Prevent closing the dropdown when clicking inside the menu
         dropdownMenu.addEventListener('click', (event) => {
             event.stopPropagation();
         });
@@ -343,6 +322,7 @@ export class Calculator {
     }
 
     toggleSign(): void {
+        console.log('sign');
         const currentValue = parseFloat(this.screen.textContent || '0');
         if (isNaN(currentValue)) {
             this.screen.textContent = 'Error';
@@ -362,7 +342,11 @@ export class Calculator {
 
     toggleSecondPrimary(button: HTMLElement) {
         this.isSecondPrimary = !this.isSecondPrimary;
+
+        // Toggle the button text
         button.textContent = this.isSecondPrimary ? 'Primary' : '2nd';
+
+        // Define primary and secondary functions
         const trigFunctions = [
             { btn: this.sinBtn, primary: 'sin(', secondary: 'asin(' },
             { btn: this.cosBtn, primary: 'cos(', secondary: 'acos(' },
@@ -373,7 +357,11 @@ export class Calculator {
         trigFunctions.forEach(({ btn, primary, secondary }) => {
             if (btn) {
                 const functionText = this.isSecondPrimary ? secondary : primary;
-                btn.textContent = functionText.replace('(', '');
+
+                // Update button text
+                btn.textContent = functionText.replace('(', ''); // Display without parentheses
+
+                // Remove all previous event listeners
                 const newBtn = btn.cloneNode(true) as HTMLElement;
                 btn.parentNode?.replaceChild(newBtn, btn);
 
@@ -382,6 +370,7 @@ export class Calculator {
                 if (btn.classList.contains('cos-btn')) this.cosBtn = newBtn;
                 if (btn.classList.contains('tan-btn')) this.tanBtn = newBtn;
 
+                // Add new event listener
                 newBtn.addEventListener('click', () => {
                     this.appendValue(functionText);
                 });
@@ -391,8 +380,9 @@ export class Calculator {
 
     trigonometry(func: string) {
         const inputText = this.screen.textContent?.trim() || '';
+        // Extract numeric value
         const inputMatch = inputText.match(/-?\d+(\.\d+)?/);
-        const inputValue = inputMatch ? parseFloat(inputMatch[0]) : NaN;
+        const inputValue = inputMatch ? parseFloat(inputMatch[0]) : NaN; // Extract number safely
 
         if (isNaN(inputValue)) {
             this.screen.textContent = 'Error';
@@ -404,14 +394,14 @@ export class Calculator {
         switch (func) {
             case 'asin':
                 if (inputValue < -1 || inputValue > 1) {
-                    this.screen.textContent = 'Error';
+                    this.screen.textContent = 'Error'; // asin is only defined for -1 ≤ x ≤ 1
                     return;
                 }
                 result = Math.asin(inputValue);
                 break;
             case 'acos':
                 if (inputValue < -1 || inputValue > 1) {
-                    this.screen.textContent = 'Error';
+                    this.screen.textContent = 'Error'; // acos is only defined for -1 ≤ x ≤ 1
                     return;
                 }
                 result = Math.acos(inputValue);
@@ -445,12 +435,14 @@ export class Calculator {
                 return;
         }
 
+        // Convert radians to degrees if DEG mode is active
         if (this.isDegreeMode && ['asin', 'acos', 'atan'].includes(func)) {
             result = result * (180 / Math.PI);
         }
 
+        // Display the result with up to 6 decimal places
         this.screen.textContent = result.toFixed(6);
-        this.saveHistory(
+        saveHistory(
             `${func}(${inputValue}${this.isDegreeMode ? '°' : ' rad'}) = ${result.toFixed(6)}`
         );
     }
@@ -474,6 +466,4 @@ export class Calculator {
     ceil() {
         this.screen.textContent = 'ceil(';
     }
-
-    saveHistory(entry: string) {}
 }
