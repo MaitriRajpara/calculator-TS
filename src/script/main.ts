@@ -1,11 +1,5 @@
-import {
-    saveHistory,
-    clearHistory,
-    displayHistory,
-    setupHistoryToggle,
-} from './history.js';
-import { handleMC, handleMR, handleMS, handleMplusAndMinus } from './memory.js';
-import { Calculator } from './calculator.js';
+import { clearHistory, setupHistoryToggle } from './history';
+import { Calculator } from './calculator';
 
 // Ensure the calculator variable is of type Calculator
 const calculator = new Calculator('screen');
