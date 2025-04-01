@@ -1,5 +1,6 @@
 import { saveHistory } from './history';
 import { handleMC, handleMR, handleMS, handleMplusAndMinus } from './memory';
+import { ExtendedMath } from './util';
 
 export class Calculator {
     screen: HTMLElement;
@@ -11,7 +12,8 @@ export class Calculator {
     sinBtn: HTMLElement;
     cosBtn: HTMLElement;
     tanBtn: HTMLElement;
-    isSecondPrimary: boolean;
+    isSecondPrimary: boolean=false;
+    math: ExtendedMath;
 
     constructor(screenId: string) {
         this.screen = document.getElementById(screenId) as HTMLElement;
@@ -26,6 +28,7 @@ export class Calculator {
         this.isPrimary = false;
         this.FEMode = false;
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.math = Math as ExtendedMath;
 
         // Constants for buttons
         const FEButton = document.getElementById('fe-btn') as HTMLElement;
@@ -159,7 +162,7 @@ export class Calculator {
     }
 
     backspace(): void {
-        let currentValue = this.screen.textContent || '';
+        const currentValue = this.screen.textContent || '';
         this.screen.textContent = currentValue.slice(0, -1) || '0';
     }
 
@@ -231,19 +234,19 @@ export class Calculator {
                 .replace('acos', 'Math.acos')
                 .replace('atan', 'Math.atan');
         } else {
-            Math.sindeg = (x: number) => Math.sin((Math.PI / 180) * x);
-            Math.cosdeg = (x: number) => Math.cos((Math.PI / 180) * x);
-            Math.tandeg = (x: number) => Math.tan((Math.PI / 180) * x);
+            this.math.sindeg = (x: number) => Math.sin((Math.PI / 180) * x);
+            this.math.cosdeg = (x: number) => Math.cos((Math.PI / 180) * x);
+            this.math.tandeg = (x: number) => Math.tan((Math.PI / 180) * x);
             expression = expression.replace(/\bsin\(/g, 'Math.sindeg(');
             expression = expression.replace(/\bcos\(/g, 'Math.cosdeg(');
             expression = expression.replace(/\btan\(/g, 'Math.tandeg(');
 
-            Math.asindeg = (x: number) => (180 / Math.PI) * Math.asin(x);
-            Math.acosdeg = (x: number) => (180 / Math.PI) * Math.acos(x);
-            Math.atandeg = (x: number) => (180 / Math.PI) * Math.atan(x);
-            expression = expression.replace(/\basin\(/g, 'Math.asin(');
-            expression = expression.replace(/\bacos\(/g, 'Math.acos(');
-            expression = expression.replace(/\batan\(/g, 'Math.atan(');
+            this.math.asindeg = (x: number) => (180 / Math.PI) * Math.asin(x);
+            this.math.acosdeg = (x: number) => (180 / Math.PI) * Math.acos(x);
+            this.math.atandeg = (x: number) => (180 / Math.PI) * Math.atan(x);
+            expression = expression.replace(/\basin\(/g, 'Math.asindeg(');
+            expression = expression.replace(/\bacos\(/g, 'Math.acosdeg(');
+            expression = expression.replace(/\batan\(/g, 'Math.atandeg(');
         }
 
         try {
@@ -266,7 +269,7 @@ export class Calculator {
     }
 
     reciprocal(): void {
-        let currentInput = this.screen.textContent || '';
+        const currentInput = this.screen.textContent || '';
         if (currentInput === '0') {
             this.screen.textContent = '1/';
             return;
@@ -387,9 +390,9 @@ export class Calculator {
     }
 
     trigonometry(func: string) {
-        let inputText = this.screen.textContent?.trim() || '';
-        let inputMatch = inputText.match(/-?\d+(\.\d+)?/);
-        let inputValue = inputMatch ? parseFloat(inputMatch[0]) : NaN;
+        const inputText = this.screen.textContent?.trim() || '';
+        const inputMatch = inputText.match(/-?\d+(\.\d+)?/);
+        const inputValue = inputMatch ? parseFloat(inputMatch[0]) : NaN;
 
         if (isNaN(inputValue)) {
             this.screen.textContent = 'Error';
