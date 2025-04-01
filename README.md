@@ -12,5 +12,7 @@ User-friendly UI
 
 ### Technologies Used
 TypeScript
+
 HTML
+
 CSS
